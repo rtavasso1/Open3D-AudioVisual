@@ -22,7 +22,7 @@ class FaceHandVisualizerApp:
         self.mp_drawing_styles = mp.solutions.drawing_styles
 
         # Generate the constellation star field with clusters.
-        constellation_gen = ConstellationGenerator(num_points=1000, radius=2.0, z_scale=0.15,
+        constellation_gen = ConstellationGenerator(num_points=1000, radius=1.75, z_scale=0.15,
                                                    min_size=0.5, max_size=2.5)
         (self.constellation_points, self.constellation_sizes,
          self.constellation_lines, self.constellation_cluster_count,
@@ -58,12 +58,13 @@ class FaceHandVisualizerApp:
                 if not ret:
                     break
 
+                frame = cv2.flip(frame, 1)
                 frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 face_results = self.face_processor.process(frame_rgb)
                 hands_results = self.hand_tracker.process(frame_rgb)
 
                 left_dispersion = 0.0
-                palette_factor = 0.5
+                palette_factor = 0.0
 
                 # Flags to track whether we've detected these hands at all this frame
                 left_present = False
